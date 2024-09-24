@@ -1,9 +1,10 @@
 from config import *
-from pokemon import*
+from APIs.pokemon import *
+from APIs.weather import *
 
 messages = {
     "!witz": "Hier ist ein Witz: Warum können Geister so schlecht lügen? Weil man durch sie hindurchsehen kann!",
-    "!hilfe": "Verfügbare Befehle: !witz, !hilfe, !zeit, !pokemon [pkmn_name]",
+    "!hilfe": "Verfügbare Befehle: !witz, !hilfe, !zeit, !pokemon [pkmn_name] (nur engl Namen), !weather [Stadtname]" ,
     "!zeit": "Die aktuelle Zeit ist: {schau auf die Uhr}"  # Platzhalter für die Zeit
 }
 
@@ -23,6 +24,11 @@ def handle_command(irc, command, user, arguments):
         pokemon_name = arguments[0]  # Das erste Argument als Pokémon-Namen verwenden
         pokemon_info = get_pokemon_info(pokemon_name)
         send_msg(irc, pokemon_info)
+    elif command == "!weather" and arguments:
+        city_name = arguments[0]  # Das erste Argument als Pokémon-Namen verwenden
+        city_info = get_weather(city_name)
+        send_msg(irc, city_info)
+
     elif command in messages:
         send_msg(irc, messages[command])
 

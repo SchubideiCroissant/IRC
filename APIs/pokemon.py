@@ -7,10 +7,10 @@ def get_pokemon_info(pokemon_name):
     if response.status_code == 200:
         data = response.json()
         name = data['name'].capitalize()
+        types = [type_info['type']['name'].capitalize() for type_info in data['types']]
         height = data['height']
         weight = data['weight']
-        types = [type_info['type']['name'] for type_info in data['types']]
-        return f"{name} (Height: {height}, Weight: {weight}, Types: {', '.join(types)})"
+        return f"{name} (Types: [{', '.join(types)}], Height: {height}, Weight: {weight})"
     else:
         return "Pokémon nicht gefunden."
 
